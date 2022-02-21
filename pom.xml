@@ -34,7 +34,7 @@
 
         <!-- git hub packages-->
         <github.owner>bonitasoft-presales</github.owner>
-        <github.repo>extApi-bdmQueries</github.repo>
+        <github.repo>api-bdmqueries-vertu</github.repo>
         <project.scm.id>github</project.scm.id>
 
     </properties>

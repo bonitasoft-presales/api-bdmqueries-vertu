@@ -47,6 +47,5 @@ jobs:
 
       - name: Publish to Github Package
         run: ./mvnw --batch-mode deploy
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -129,7 +129,7 @@ class Index implements RestApiController {
 
 
 	protected Map<String, Object> getSqlParameters(HttpServletRequest request, String queryId, ResourceProvider resourceProvider) {
-		def exclusions = ["queryId", "p", "c","o"]
+		def exclusions = ["queryId", "p", "c", "o"]
 		Properties queryProps = loadProperties("${queryId}.properties" as String, resourceProvider)
 
 		Map<String, Object> params = [:]

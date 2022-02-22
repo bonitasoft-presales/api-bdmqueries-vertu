@@ -44,9 +44,14 @@ class Index implements RestApiController {
 		if (c == null) {
 			return buildErrorResponse(responseBuilder, """{"error" : "the parameter c is missing"}""")
 		}
+		// Retrieve o parameter
+		def o = request.getParameter "o"
+		if (o == null) {
+			return buildResponse(responseBuilder,"""{"error" : "the parameter o is missing"}""")
+		}
 
 		// Get the query SQL definition from the queries.properties file using query id.
-		String query = getQuery queryId, context.resourceProvider
+		String query = getQuery queryId, context.resourceProvider, o
 		if (query == null) {
 			return buildErrorResponse(responseBuilder, "The queryId does not refer to an existing query. Check your query id and queries.properties file content.")
 		}
@@ -124,7 +129,7 @@ class Index implements RestApiController {
 
 
 	protected Map<String, Object> getSqlParameters(HttpServletRequest request, String queryId, ResourceProvider resourceProvider) {
-		def exclusions = ["queryId", "p", "c"]
+		def exclusions = ["queryId", "p", "c","o"]
 		Properties queryProps = loadProperties("${queryId}.properties" as String, resourceProvider)
 
 		Map<String, Object> params = [:]
@@ -187,10 +192,10 @@ class Index implements RestApiController {
 		new Sql(dataSource)
 	}
 
-	protected String getQuery(String queryId, ResourceProvider resourceProvider) {
+	protected String getQuery(String queryId, ResourceProvider resourceProvider, String order) {
 		Properties props = loadProperties "queries.properties", resourceProvider
 		def sqlFile = props[queryId]
-		loadSqlFile(sqlFile, resourceProvider)
+		loadSqlFile(sqlFile, resourceProvider) + "order by ${order}"
 	}
 
 	protected Properties loadProperties(String fileName, ResourceProvider resourceProvider) {

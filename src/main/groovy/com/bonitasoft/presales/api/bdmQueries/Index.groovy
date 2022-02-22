@@ -195,7 +195,8 @@ class Index implements RestApiController {
 	protected String getQuery(String queryId, ResourceProvider resourceProvider, String order) {
 		Properties props = loadProperties "queries.properties", resourceProvider
 		def sqlFile = props[queryId]
-		loadSqlFile(sqlFile, resourceProvider) + "order by ${order}"
+		def query = loadSqlFile(sqlFile, resourceProvider) + "order by ${order}"
+		return query
 	}
 
 	protected Properties loadProperties(String fileName, ResourceProvider resourceProvider) {

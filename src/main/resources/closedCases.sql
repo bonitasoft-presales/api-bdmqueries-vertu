@@ -2,8 +2,6 @@ select t.bonitaInvoiceID, t.bonitaUserID, t.transactionID, t.registrationNumber,
 from Transactions t
 where t.status = 'Completed'
 and t.site = :s
-and ( t.transactionID like :q
-or t.registrationNumber like :q
-or t.costCentre like :q
-or t.status like :q
+and ( t.registrationNumber like :q
+or t.claimStatus like :q
 )
